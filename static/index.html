@@ -3,13 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Жабьи хроники</title>
-    <link rel="stylesheet" href="styles.css">
+	<style>
+        /* Обновленные стили для темы лягушек */
+        body {
+            color: #2a7f2f; /* Зеленый цвет вместо красного */
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #1a5e1f; /* Темно-зеленый для заголовка */
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #2a7f2f;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50; /* Зеленый цвет кнопок */
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049; /* Темнее при наведении */
+        }
+    </style>
+
+	<script src="./script.js"></script>
 </head>
 <body>
     <header>
         <h1>🐸 Добро пожаловать в мир жаб! 🐸</h1>
         <p>Здесь вы найдёте информацию о самых интересных представителях жабьего царства.</p>
     </header>
+
+	<section>
+	<input type="text" id="inputName" placeholder="Имя" required />
+        <input type="text" id="inputSpecies" placeholder="Вид" required />
+        <input type="text" id="inputHabitat" placeholder="Ареал обитания" required />
+        <input type="text" id="inputAge" placeholder="Возраст" required />
+        <button onclick="getMessage()">Получить</button>
+        <button onclick="sendMessage()">Отправить</button>
+        <button onclick="delMessage()">Удалить</button>
+	</section>
 
     <section>
         <h2>📜 Таблица жаб 📜</h2>
@@ -33,23 +71,23 @@
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            try {
-                const response = await fetch("/frogs");
-                const frogs = await response.json();
-                const tableBody = document.querySelector("#frogsTableBody");
-
-                frogs.forEach(frog => {
-                    const row = tableBody.insertRow();
-                    row.insertCell(0).innerText = frog.name;
-                    row.insertCell(1).innerText = frog.species;
-                    row.insertCell(2).innerText = frog.habitat;
-                    row.insertCell(3).innerText = frog.age;
-                });
-            } catch (error) {
-                console.error("Ошибка загрузки данных о жабах:", error);
-            }
-        });
+  //      document.addEventListener("DOMContentLoaded", async () => {
+  //          try {
+  //              const response = await fetch("/frogs");
+  //              const frogs = await response.json();
+  //              const tableBody = document.querySelector("#frogsTableBody");
+  //
+  //              frogs.forEach(frog => {
+  //                  const row = tableBody.insertRow();
+  //                  row.insertCell(0).innerText = frog.name;
+  //                  row.insertCell(1).innerText = frog.species;
+  //                  row.insertCell(2).innerText = frog.habitat;
+  //                  row.insertCell(3).innerText = frog.age;
+  //              });
+  //          } catch (error) {
+  //              console.error("Ошибка загрузки данных о жабах:", error);
+  //          }
+  //      });
     </script>
 </body>
 </html>

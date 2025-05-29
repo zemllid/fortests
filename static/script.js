@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async () => {await loadFrogs();})
+async function loadFrogs()
+{
     try {
         const response = await fetch("/frogs"); // Запрашиваем список жаб с сервера
         const frogs = await response.json();
@@ -34,7 +36,7 @@ async function addFrog(name, species, habitat, age) {
         if (!response.ok) throw new Error("Ошибка добавления жабы");
 
         console.log("Жаба успешно добавлена:", frog);
-        location.reload(); // Обновляем страницу, чтобы отобразить новую жабу
+        await loadFrogs(); // Обновляем страницу, чтобы отобразить новую жабу
     } catch (error) {
         console.error("Ошибка:", error);
     }
