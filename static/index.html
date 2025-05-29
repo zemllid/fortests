@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Жабьи хроники</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🐸 Добро пожаловать в мир жаб! 🐸</h1>
+        <p>Здесь вы найдёте информацию о самых интересных представителях жабьего царства.</p>
+    </header>
+
+    <section>
+        <h2>📜 Таблица жаб 📜</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Вид</th>
+                    <th>Ареал обитания</th>
+                    <th>Возраст</th>
+                </tr>
+            </thead>
+            <tbody id="frogsTableBody">
+                <!-- Данные загружаются динамически -->
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Жабьи хроники. Все права защищены.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const response = await fetch("/frogs");
+                const frogs = await response.json();
+                const tableBody = document.querySelector("#frogsTableBody");
+
+                frogs.forEach(frog => {
+                    const row = tableBody.insertRow();
+                    row.insertCell(0).innerText = frog.name;
+                    row.insertCell(1).innerText = frog.species;
+                    row.insertCell(2).innerText = frog.habitat;
+                    row.insertCell(3).innerText = frog.age;
+                });
+            } catch (error) {
+                console.error("Ошибка загрузки данных о жабах:", error);
+            }
+        });
+    </script>
+</body>
+</html>
