@@ -10,11 +10,10 @@ import (
 	"time"
 	"strconv"
 
-	_ "github.com/lib/pq" // драйвер PostgreSQL
+	_ "github.com/lib/pq"
 )
 
 func main() {
-	// Чтение настроек подключения из переменных окружения
 	dbHost := getEnv("DB_HOST", "postgresf")
 	dbPort := getEnv("DB_PORT", "5432")
 	dbUser := getEnv("DB_USER", "postgres")
@@ -28,13 +27,11 @@ if errD != nil {
 	log.Printf("wait for %v sec", delaySec)
 	time.Sleep(time.Duration(delaySec) * time.Second)
 
-	// Формирование строки подключения
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		dbHost, dbPort, dbUser, dbPassword, dbName)
 		
     log.Printf("test connect %v",psqlInfo)
 
-	// Подключение к базе данных PostgreSQL
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
 		log.Fatalf("Ошибка подключения к БД: %v", err)
@@ -51,10 +48,8 @@ if errD != nil {
 	}
 	log.Println("Подключение к БД успешно установлено")
 
-	// Создаём экземпляр обработчика напрямую
 	frogHandler := NewFrogHandler(db)
 
-	// Регистрируем обработчики
 	http.HandleFunc("/frogs", frogHandler.FrogsHandler)
 	http.HandleFunc("/frogs/", frogHandler.FrogHandler)
 
@@ -67,7 +62,6 @@ if errD != nil {
 	}
 }
 
-// getEnv возвращает значение переменной окружения или значение по умолчанию
 func getEnv(key, defaultVal string) string {
 	if value, exists := os.LookupEnv(key); exists {
 		return value
