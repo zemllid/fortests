@@ -6,6 +6,7 @@ import (
     "net/http"
     "strconv"
     "strings"
+	"jabatable/models"
 )
 
 // FrogHandler содержит ссылку на базу данных

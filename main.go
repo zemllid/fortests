@@ -8,6 +8,7 @@ import (
     "net/http"
     "os"
     "time"
+	"jabatable/handlers"
 
     _ "github.com/lib/pq" // драйвер PostgreSQL
 )
