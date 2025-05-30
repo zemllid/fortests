@@ -27,13 +27,7 @@ async function loadFrogs() {
 		} else {
         console.log(json.length)
 		let a=""
-		let b=""
         for(var i=0;i<json.length; i++) {
-            b+= "<td> <tr>" + json[i].id + "<tr>"
-			+ json[i].name + "<tr>" 
-                                                         + json[i].species + "<tr>" 
-                                                         + json[i].habitat + "<tr>"  
-                                                         + json[i].age
 			a += "\n <br>" + json[i].id + " "
 			+ json[i].name + "  " 
                                                          + json[i].species + "  " 
@@ -42,7 +36,6 @@ async function loadFrogs() {
             console.log(json[i].name + "  " +  json[i].species + "  " + json[i].habitat)
         };
 		plain.innerHTML=a
-		element.innerHtml = b
 		}
     } else{
         alert("Error: " + response.json())
