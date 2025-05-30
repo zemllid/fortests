@@ -44,7 +44,7 @@
         <input type="text" id="inputSpecies" placeholder="Вид" required />
         <input type="text" id="inputHabitat" placeholder="Ареал обитания" required />
         <input type="text" id="inputAge" placeholder="Возраст" required />
-        <button onclick="getMessage()">Получить</button>
+        <button onclick="loadFrogs()">Получить</button>
         <button onclick="createMessage()">Добавить</button>
         <button onclick="delMessage()">Удалить</button>
 	</section>
@@ -54,16 +54,19 @@
         <table>
             <thead>
                 <tr>
-                    <th>Имя</th>
+                    <th>ID</th>
+					<th>Имя</th>
                     <th>Вид</th>
                     <th>Ареал обитания</th>
                     <th>Возраст</th>
                 </tr>
             </thead>
             <tbody id="frogsTableBody">
-                <!-- Данные загружаются динамически -->
             </tbody>
         </table>
+		<div id="plain">
+		<!-- Данные загружаются динамически -->
+		</div>
     </section>
 
     <footer>

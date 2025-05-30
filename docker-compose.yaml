@@ -1,32 +1,41 @@
 services:
   app:
-    #image: studentsapp
-    build: .
+    
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+    - "8080:8080"
     depends_on:
-      - db
-
+    - db
+    environment:
+      DB_HOST: postgresf
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: frogs_db
 
   db:
     image: postgres:15
-    hostname: postgres
+    hostname: postgresf
     restart: always
     ports:
-      - "8081:5432"
+    - "8081:5432"
     environment:
+      DB_HOST: postgresf
+      DB_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: frogs_db
     volumes:
       - ./db-init/:/docker-entrypoint-initdb.d/
 
-  pgadmin:
-    image: dpage/pgadmin4
-    links:
-    - db
-    ports:
-    - 5050:80
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.stu
-      PGADMIN_DEFAULT_PASSWORD: 123456
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    links:
+#    - db
+#    ports:
+#    - 5050:80
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: admin@admin.stu
+#      PGADMIN_DEFAULT_PASSWORD: 123456
