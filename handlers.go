@@ -66,7 +66,7 @@ func (h *FrogHandler) FrogHandler(w http.ResponseWriter, r *http.Request) {
 func (h *FrogHandler) getFrogs(w http.ResponseWriter, r *http.Request) {
 	rows, err := h.DB.Query("SELECT id, name, species, habitat, age FROM frogs")
 	if err != nil {
-		http.Error(w, "Ошибка запроса к базе данных", http.StatusInternalServerError)
+		http.Error(w, "Ошибка запроса к базе данных всех жаб", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()

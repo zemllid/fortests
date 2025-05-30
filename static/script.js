@@ -1,43 +1,39 @@
-document.addEventListener("DOMContentLoaded", async () => {await loadFrogs();})
-async function loadFrogs()
-{
-    try {
-        const response = await fetch("/frogs"); // Запрашиваем список жаб с сервера
-        const frogs = await response.json();
-        const tableBody = document.querySelector("#frogsTableBody");
+async function createMessage() {
+    var inputID = document.getElementById("inputName").value;
+    var inputa = document.getElementById("inputSpecies").value;
+    var inputb = document.getElementById("inputHabitat").value;
+    var inputc = document.getElementById("inputAge").value;
+    console.log(inputID + inputa + inputb + inputc)
+    let response = await fetch('/frogs',{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name: inputID, species: inputa, habitat: inputb, age: parseInt(inputc) })
+      });
+}
 
-        if (frogs.length === 0) {
-            tableBody.innerHTML = "<tr><td colspan='4'>Нет данных о жабах 🐸</td></tr>";
-            return;
-        }
+async function getMessage() {
+    let response = await fetch('/frogs');  
+    if (response.ok){
+        let json = await response.json()
+        let element = document.getElementById("table");
+        element.innerText = ""
+        console.log(json.length)
+        for(var i=0;i<json.length; i++) {
+            element.innerText = element.innerText + "\n" + json[i].name + "  " 
+                                                         + json[i].species + "  " 
+                                                         + json[i].habitat + "  "  
+                                                         + json[i].age
+            console.log(json[i].name + "  " +  json[i].species + "  " + json[i].habitat)
+        };
 
-        frogs.forEach(frog => {
-            const row = tableBody.insertRow();
-            row.insertCell(0).innerText = frog.name;
-            row.insertCell(1).innerText = frog.species;
-            row.insertCell(2).innerText = frog.habitat;
-            row.insertCell(3).innerText = frog.age;
-        });
-    } catch (error) {
-        console.error("Ошибка загрузки данных о жабах:", error);
-    }
-});
+    } else{
+        alert("Error: " + response.json())
+    }  
+}
 
-// Функция для добавления новой жабы (пример)
-async function addFrog(name, species, habitat, age) {
-    const frog = { name, species, habitat, age };
-    try {
-        const response = await fetch("/frogs", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(frog),
-        });
-
-        if (!response.ok) throw new Error("Ошибка добавления жабы");
-
-        console.log("Жаба успешно добавлена:", frog);
-        await loadFrogs(); // Обновляем страницу, чтобы отобразить новую жабу
-    } catch (error) {
-        console.error("Ошибка:", error);
-    }
+async function delMessage() {
+    var inputID = document.getElementById("inputName").value;
+    let response = await fetch('/frogs/'+inputID,{
+        method: 'DELETE'
+      });
 }

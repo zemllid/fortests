@@ -16,8 +16,8 @@ func main() {
 	// Чтение настроек подключения из переменных окружения
 	dbHost := getEnv("DB_HOST", "localhost")
 	dbPort := getEnv("DB_PORT", "5432")
-	dbUser := getEnv("DB_USER", "user")
-	dbPassword := getEnv("DB_PASSWORD", "pass")
+	dbUser := getEnv("DB_USER", "postgres")
+	dbPassword := getEnv("DB_PASSWORD", "postgres")
 	dbName := getEnv("DB_NAME", "frogs_db")
 
 	// Формирование строки подключения
@@ -39,35 +39,20 @@ func main() {
 	}
 	log.Println("Подключение к БД успешно установлено")
 
-
 	// Создаём экземпляр обработчика напрямую
-    frogHandler := FrogHandler{DB: db}
+	frogHandler := NewFrogHandler(db)
 
-    // Регистрируем обработчики
-    http.HandleFunc("/frogs", frogHandler.FrogsHandler)
-    http.HandleFunc("/frogs/", frogHandler.FrogHandler)
+	// Регистрируем обработчики
+	http.HandleFunc("/frogs", frogHandler.FrogsHandler)
+	http.HandleFunc("/frogs/", frogHandler.FrogHandler)
 
-    serverAddr := ":8080"
-    log.Printf("Сервер запущен на %s", serverAddr)
-    if err := http.ListenAndServe(serverAddr, nil); err != nil {
-        log.Fatalf("Ошибка HTTP-сервера: %v", err)
-    }
+	http.Handle("/", http.FileServer(http.Dir("./static")))
 
-
-	// Инициализация обработчика для ресурсов "жаб"
-	//frogHandler := NewFrogHandler(db)
-
-	// Регистрация обработчиков:
-	// Обработчик для "/frogs" (GET, POST)
-	//http.HandleFunc("/frogs", frogHandler.FrogsHandler)
-	// Обработчик для "/frogs/{id}" (GET, PUT, DELETE)
-	//http.HandleFunc("/frogs/", frogHandler.FrogHandler)
-
-	//serverAddr := ":8080"
-	//log.Printf("Сервер запущен на %s", serverAddr)
-	//if err := http.ListenAndServe(serverAddr, nil); err != nil {
-	//	log.Fatalf("Ошибка HTTP-сервера: %v", err)
-	//}
+	serverAddr := ":8080"
+	log.Printf("Сервер запущен на %s", serverAddr)
+	if err := http.ListenAndServe(serverAddr, nil); err != nil {
+		log.Fatalf("Ошибка HTTP-сервера: %v", err)
+	}
 }
 
 // getEnv возвращает значение переменной окружения или значение по умолчанию
